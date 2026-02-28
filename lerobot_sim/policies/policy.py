@@ -133,9 +133,7 @@ class PushTExpertPolicy(BasePolicy):
         super().__init__(action_dim=2)
         self._rng = np.random.default_rng(seed)
 
-    def _approach_position(
-        self, agent: np.ndarray, block: np.ndarray, target: np.ndarray
-    ) -> np.ndarray:
+    def _approach_position(self, agent: np.ndarray, block: np.ndarray, target: np.ndarray) -> np.ndarray:
         """Compute the position behind the block to push from.
 
         Args:
@@ -177,9 +175,7 @@ class PushTExpertPolicy(BasePolicy):
         target = state[4:6]
         return self._compute_push_action(agent, block, target)
 
-    def _compute_push_action(
-        self, agent: np.ndarray, block: np.ndarray, target: np.ndarray
-    ) -> np.ndarray:
+    def _compute_push_action(self, agent: np.ndarray, block: np.ndarray, target: np.ndarray) -> np.ndarray:
         """Move behind the block then push it toward the target.
 
         Args:

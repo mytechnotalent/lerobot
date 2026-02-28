@@ -21,7 +21,6 @@ from typing import Any, Dict, List, Optional
 
 import numpy as np
 
-
 # ======================================================================
 # SimDatasetRecorder
 # ======================================================================
@@ -63,9 +62,7 @@ class SimDatasetRecorder:
             raise RuntimeError("Previous episode not ended. Call end_episode() first.")
         self._current_episode = []
 
-    def record_step(
-        self, observation: Dict[str, np.ndarray], action: np.ndarray
-    ) -> None:
+    def record_step(self, observation: Dict[str, np.ndarray], action: np.ndarray) -> None:
         """Append a single timestep of observation and action data.
 
         Args:
@@ -160,16 +157,8 @@ class SimDatasetRecorder:
         Args:
             ep_dir: Directory to write the file into.
         """
-        tabular = {
-            k: v
-            for frame in self._current_episode
-            for k, v in frame.items()
-            if v.ndim <= 1
-        }
-        stacked = {
-            k: np.stack([f[k] for f in self._current_episode if k in f])
-            for k in tabular
-        }
+        tabular = {k: v for frame in self._current_episode for k, v in frame.items() if v.ndim <= 1}
+        stacked = {k: np.stack([f[k] for f in self._current_episode if k in f]) for k in tabular}
         np.savez_compressed(ep_dir / "tabular.npz", **stacked)
 
     def _save_image_data(self, ep_dir: Path) -> None:
@@ -183,9 +172,7 @@ class SimDatasetRecorder:
                 if arr.ndim == 3:
                     self._save_single_image(ep_dir, key, idx, arr)
 
-    def _save_single_image(
-        self, ep_dir: Path, key: str, idx: int, arr: np.ndarray
-    ) -> None:
+    def _save_single_image(self, ep_dir: Path, key: str, idx: int, arr: np.ndarray) -> None:
         """Write one image array to disk as a raw ``.npy`` file.
 
         Args:
@@ -257,12 +244,8 @@ class HubDatasetLoader:
         try:
             from huggingface_hub import hf_hub_download
         except ImportError as exc:
-            raise ImportError(
-                "Install huggingface_hub: pip install huggingface_hub"
-            ) from exc
-        local = hf_hub_download(
-            repo_id=self.repo_id, filename="meta/info.json", cache_dir=self.cache_dir
-        )
+            raise ImportError("Install huggingface_hub: pip install huggingface_hub") from exc
+        local = hf_hub_download(repo_id=self.repo_id, filename="meta/info.json", cache_dir=self.cache_dir)
         return json.loads(Path(local).read_text())
 
     def _list_episodes(self, meta: Dict[str, Any]) -> List[Dict[str, Any]]:
@@ -301,8 +284,6 @@ class HubDatasetLoader:
         try:
             from huggingface_hub import list_datasets
         except ImportError as exc:
-            raise ImportError(
-                "Install huggingface_hub: pip install huggingface_hub"
-            ) from exc
+            raise ImportError("Install huggingface_hub: pip install huggingface_hub") from exc
         results = list_datasets(search=search, limit=50)
         return [ds.id for ds in results]

@@ -76,9 +76,7 @@ class KeyboardTeleop:
         try:
             import pygame
         except ImportError as exc:
-            raise ImportError(
-                "Pygame required for real-time teleop: pip install pygame"
-            ) from exc
+            raise ImportError("Pygame required for real-time teleop: pip install pygame") from exc
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return False

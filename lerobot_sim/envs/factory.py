@@ -22,7 +22,6 @@ from lerobot_sim.envs.configs import (
     SimEnvConfig,
 )
 
-
 # ---------------------------------------------------------------------------
 # Config look-up table (name -> default config constructor)
 # ---------------------------------------------------------------------------
@@ -76,9 +75,7 @@ def _env_class_for_config(cfg: SimEnvConfig) -> type:
     }
     env_cls = dispatch.get(type(cfg))
     if env_cls is None:
-        raise ValueError(
-            f"No env class registered for config type {type(cfg).__name__}"
-        )
+        raise ValueError(f"No env class registered for config type {type(cfg).__name__}")
     return env_cls
 
 
@@ -95,9 +92,7 @@ def _validate_n_envs(n_envs: int) -> None:
         raise ValueError("`n_envs` must be at least 1")
 
 
-def _build_vector_env(
-    env_cls: type, cfg: SimEnvConfig, n_envs: int, use_async: bool
-) -> gym.vector.VectorEnv:
+def _build_vector_env(env_cls: type, cfg: SimEnvConfig, n_envs: int, use_async: bool) -> gym.vector.VectorEnv:
     """Construct a Gymnasium vector environment.
 
     Args:

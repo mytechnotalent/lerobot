@@ -98,6 +98,10 @@ envs = make_env("your-user/lerobot-sim", trust_remote_code=True)
 - [LeRobot Documentation](https://huggingface.co/docs/lerobot/index) — full API docs, installation, and hardware guides
 - [LeRobot GitHub](https://github.com/huggingface/lerobot) — upstream source code
 
+## Arduino UNO Q Deployment
+
+The `lerobot-policy-deployment-app/` folder contains a complete [Arduino App Lab](https://www.arduino.cc/en/software/#app-lab-section) application that deploys the trained MLP policy to an [Arduino UNO Q](https://www.arduino.cc/product-uno-q). Enter state observations through a web interface, and the board drives servos in real time using the NumPy forward pass while displaying episode status on the 8 x 13 LED matrix. See [`lerobot-policy-deployment-app/README.md`](lerobot-policy-deployment-app/README.md) for full details.
+
 ## Author
 
 Kevin Thomas

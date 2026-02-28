@@ -63,18 +63,12 @@ class ReachSimEnv(gym.Env):
 
     def _init_spaces(self) -> None:
         """Define action and observation Gymnasium spaces."""
-        self.action_space = spaces.Box(
-            low=-1.0, high=1.0, shape=(self.cfg.action_dim,), dtype=np.float32
-        )
+        self.action_space = spaces.Box(low=-1.0, high=1.0, shape=(self.cfg.action_dim,), dtype=np.float32)
         obs_dict: Dict[str, spaces.Space] = {}
-        obs_dict["agent_pos"] = spaces.Box(
-            low=-5.0, high=5.0, shape=(self.cfg.state_dim,), dtype=np.float32
-        )
+        obs_dict["agent_pos"] = spaces.Box(low=-5.0, high=5.0, shape=(self.cfg.state_dim,), dtype=np.float32)
         if "pixels" in self.cfg.obs_type:
             h, w = self.cfg.observation_height, self.cfg.observation_width
-            obs_dict["pixels"] = spaces.Box(
-                low=0, high=255, shape=(h, w, 3), dtype=np.uint8
-            )
+            obs_dict["pixels"] = spaces.Box(low=0, high=255, shape=(h, w, 3), dtype=np.uint8)
         self.observation_space = spaces.Dict(obs_dict)
 
     # ------------------------------------------------------------------
@@ -83,9 +77,7 @@ class ReachSimEnv(gym.Env):
 
     def _sample_target(self) -> None:
         """Sample a random target position in the reachable workspace."""
-        self._target_pos = self._rng.uniform([-0.3, -0.3, 0.1], [0.3, 0.3, 0.5]).astype(
-            np.float64
-        )
+        self._target_pos = self._rng.uniform([-0.3, -0.3, 0.1], [0.3, 0.3, 0.5]).astype(np.float64)
 
     def reset(
         self, *, seed: Optional[int] = None, options: Optional[Dict[str, Any]] = None
@@ -118,9 +110,7 @@ class ReachSimEnv(gym.Env):
         success = dist < 0.03
         return reward, success
 
-    def step(
-        self, action: np.ndarray
-    ) -> Tuple[Dict[str, np.ndarray], float, bool, bool, Dict[str, Any]]:
+    def step(self, action: np.ndarray) -> Tuple[Dict[str, np.ndarray], float, bool, bool, Dict[str, Any]]:
         """Advance the environment by one step.
 
         Args:

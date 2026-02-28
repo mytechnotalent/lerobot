@@ -95,17 +95,11 @@ class Trainer:
         """
         from lerobot_sim.envs.factory import _env_class_for_config, _resolve_config
 
-        cfg = (
-            _resolve_config(self.env_cfg)
-            if isinstance(self.env_cfg, str)
-            else self.env_cfg
-        )
+        cfg = _resolve_config(self.env_cfg) if isinstance(self.env_cfg, str) else self.env_cfg
         cls = _env_class_for_config(cfg)
         return cls(cfg)
 
-    def _collect_one_episode(
-        self, env: Any, demo_policy: BasePolicy, recorder: SimDatasetRecorder
-    ) -> None:
+    def _collect_one_episode(self, env: Any, demo_policy: BasePolicy, recorder: SimDatasetRecorder) -> None:
         """Roll out one episode, recording every timestep.
 
         Args:
@@ -143,9 +137,7 @@ class Trainer:
             obs, _, terminated, truncated, _ = env.step(action)
             done = terminated or truncated
 
-    def _store_demo_transition(
-        self, obs: Dict[str, np.ndarray], action: np.ndarray
-    ) -> None:
+    def _store_demo_transition(self, obs: Dict[str, np.ndarray], action: np.ndarray) -> None:
         """Append a (state, action) pair to the in-memory demo buffer.
 
         Args:
@@ -153,9 +145,7 @@ class Trainer:
             action: Action array.
         """
         if "agent_pos" in obs:
-            self._demo_data.append(
-                {"state": obs["agent_pos"].copy(), "action": action.copy()}
-            )
+            self._demo_data.append({"state": obs["agent_pos"].copy(), "action": action.copy()})
 
     def _select_expert_policy(self) -> BasePolicy:
         """Pick the scripted expert policy matching the environment.
@@ -318,9 +308,7 @@ class Trainer:
         total_reward, success = self._run_eval_loop(env, obs, total_reward, success)
         return {"reward": total_reward, "success": float(success)}
 
-    def _run_eval_loop(
-        self, env: Any, obs: Dict, total_reward: float, success: bool
-    ) -> tuple[float, bool]:
+    def _run_eval_loop(self, env: Any, obs: Dict, total_reward: float, success: bool) -> tuple[float, bool]:
         """Step through the environment, accumulating reward.
 
         Args:
@@ -355,14 +343,10 @@ class Trainer:
             Dictionary with ``'mean_reward'`` and ``'success_rate'``.
         """
         env = self._create_single_env()
-        results = [
-            self._eval_one_episode(env) for _ in range(self.config.num_eval_episodes)
-        ]
+        results = [self._eval_one_episode(env) for _ in range(self.config.num_eval_episodes)]
         mean_reward = float(np.mean([r["reward"] for r in results]))
         success_rate = float(np.mean([r["success"] for r in results]))
-        print(
-            f"Eval ({self.config.num_eval_episodes} eps): reward={mean_reward:.3f}, success={success_rate:.1%}"
-        )
+        print(f"Eval ({self.config.num_eval_episodes} eps): reward={mean_reward:.3f}, success={success_rate:.1%}")
         return {"mean_reward": mean_reward, "success_rate": success_rate}
 
     # ------------------------------------------------------------------

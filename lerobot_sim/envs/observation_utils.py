@@ -77,9 +77,7 @@ def _process_state(obs: Dict[str, np.ndarray], result: Dict[str, np.ndarray]) ->
         result[OBS_STATE] = _add_batch_dim(state)
 
 
-def _process_env_state(
-    obs: Dict[str, np.ndarray], result: Dict[str, np.ndarray]
-) -> None:
+def _process_env_state(obs: Dict[str, np.ndarray], result: Dict[str, np.ndarray]) -> None:
     """Extract and convert environment state observations.
 
     Args:
@@ -142,10 +140,6 @@ def env_to_policy_features(
     policy_features: Dict[str, PolicyFeature] = {}
     for env_key, ft in features.items():
         policy_key = features_map.get(env_key, env_key)
-        shape = (
-            _get_channel_first_shape(ft.shape)
-            if ft.type is FeatureType.VISUAL
-            else ft.shape
-        )
+        shape = _get_channel_first_shape(ft.shape) if ft.type is FeatureType.VISUAL else ft.shape
         policy_features[policy_key] = PolicyFeature(type=ft.type, shape=shape)
     return policy_features

@@ -64,18 +64,12 @@ class PickPlaceSimEnv(gym.Env):
 
     def _init_spaces(self) -> None:
         """Define action and observation Gymnasium spaces."""
-        self.action_space = spaces.Box(
-            low=-1.0, high=1.0, shape=(self.cfg.action_dim,), dtype=np.float32
-        )
+        self.action_space = spaces.Box(low=-1.0, high=1.0, shape=(self.cfg.action_dim,), dtype=np.float32)
         obs_dict: Dict[str, spaces.Space] = {}
-        obs_dict["agent_pos"] = spaces.Box(
-            low=-5.0, high=5.0, shape=(self.cfg.state_dim,), dtype=np.float32
-        )
+        obs_dict["agent_pos"] = spaces.Box(low=-5.0, high=5.0, shape=(self.cfg.state_dim,), dtype=np.float32)
         if "pixels" in self.cfg.obs_type:
             h, w = self.cfg.observation_height, self.cfg.observation_width
-            obs_dict["pixels"] = spaces.Box(
-                low=0, high=255, shape=(h, w, 3), dtype=np.uint8
-            )
+            obs_dict["pixels"] = spaces.Box(low=0, high=255, shape=(h, w, 3), dtype=np.uint8)
         self.observation_space = spaces.Dict(obs_dict)
 
     def _init_entities(self) -> None:
@@ -90,15 +84,11 @@ class PickPlaceSimEnv(gym.Env):
 
     def _randomise_cube(self) -> None:
         """Sample a random cube starting position in the reachable workspace."""
-        self._cube_pos = self._rng.uniform([-0.3, -0.3, 0.02], [0.3, 0.3, 0.02]).astype(
-            np.float64
-        )
+        self._cube_pos = self._rng.uniform([-0.3, -0.3, 0.02], [0.3, 0.3, 0.02]).astype(np.float64)
 
     def _randomise_target(self) -> None:
         """Sample a random target pad position in the reachable workspace."""
-        self._target_pos = self._rng.uniform(
-            [-0.3, -0.3, 0.02], [0.3, 0.3, 0.02]
-        ).astype(np.float64)
+        self._target_pos = self._rng.uniform([-0.3, -0.3, 0.02], [0.3, 0.3, 0.02]).astype(np.float64)
 
     def reset(
         self, *, seed: Optional[int] = None, options: Optional[Dict[str, Any]] = None
@@ -147,9 +137,7 @@ class PickPlaceSimEnv(gym.Env):
         success = cube_target_dist < 0.04
         return reward, success
 
-    def step(
-        self, action: np.ndarray
-    ) -> Tuple[Dict[str, np.ndarray], float, bool, bool, Dict[str, Any]]:
+    def step(self, action: np.ndarray) -> Tuple[Dict[str, np.ndarray], float, bool, bool, Dict[str, Any]]:
         """Advance the environment by one step.
 
         Args:
@@ -184,9 +172,7 @@ class PickPlaceSimEnv(gym.Env):
             1-D float32 array of length ``state_dim``.
         """
         arm_state = self._arm.get_state()
-        return np.concatenate([arm_state[: self.cfg.state_dim - 0]]).astype(np.float32)[
-            : self.cfg.state_dim
-        ]
+        return np.concatenate([arm_state[: self.cfg.state_dim - 0]]).astype(np.float32)[: self.cfg.state_dim]
 
     def _build_observation(self) -> Dict[str, np.ndarray]:
         """Assemble the observation dictionary.

@@ -102,9 +102,7 @@ class PushTSimConfig(SimEnvConfig):
 
     def __post_init__(self) -> None:
         """Populate ``features`` and ``features_map`` based on ``obs_type``."""
-        self.features[ACTION] = PolicyFeature(
-            type=FeatureType.ACTION, shape=(self.action_dim,)
-        )
+        self.features[ACTION] = PolicyFeature(type=FeatureType.ACTION, shape=(self.action_dim,))
         self.features_map[ACTION] = ACTION
         self.features_map["agent_pos"] = OBS_STATE
         self.features_map["pixels"] = OBS_IMAGE
@@ -113,9 +111,7 @@ class PushTSimConfig(SimEnvConfig):
 
     def _add_state_features(self) -> None:
         """Register the agent-position state feature."""
-        self.features["agent_pos"] = PolicyFeature(
-            type=FeatureType.STATE, shape=(self.state_dim,)
-        )
+        self.features["agent_pos"] = PolicyFeature(type=FeatureType.STATE, shape=(self.state_dim,))
 
     def _add_visual_features(self) -> None:
         """Register pixel observation features when obs_type requires them."""
@@ -163,9 +159,7 @@ class PickPlaceSimConfig(SimEnvConfig):
 
     def __post_init__(self) -> None:
         """Populate ``features`` and ``features_map`` based on ``obs_type``."""
-        self.features[ACTION] = PolicyFeature(
-            type=FeatureType.ACTION, shape=(self.action_dim,)
-        )
+        self.features[ACTION] = PolicyFeature(type=FeatureType.ACTION, shape=(self.action_dim,))
         self.features_map[ACTION] = ACTION
         self.features_map["agent_pos"] = OBS_STATE
         self.features_map["pixels"] = OBS_IMAGE
@@ -174,9 +168,7 @@ class PickPlaceSimConfig(SimEnvConfig):
 
     def _add_state_features(self) -> None:
         """Register proprioceptive state features."""
-        self.features["agent_pos"] = PolicyFeature(
-            type=FeatureType.STATE, shape=(self.state_dim,)
-        )
+        self.features["agent_pos"] = PolicyFeature(type=FeatureType.STATE, shape=(self.state_dim,))
 
     def _add_visual_features(self) -> None:
         """Register pixel observation features when obs_type requires them."""
@@ -224,9 +216,7 @@ class ReachSimConfig(SimEnvConfig):
 
     def __post_init__(self) -> None:
         """Populate ``features`` and ``features_map`` based on ``obs_type``."""
-        self.features[ACTION] = PolicyFeature(
-            type=FeatureType.ACTION, shape=(self.action_dim,)
-        )
+        self.features[ACTION] = PolicyFeature(type=FeatureType.ACTION, shape=(self.action_dim,))
         self.features_map[ACTION] = ACTION
         self.features_map["agent_pos"] = OBS_STATE
         self.features_map["pixels"] = OBS_IMAGE
@@ -235,9 +225,7 @@ class ReachSimConfig(SimEnvConfig):
 
     def _add_state_features(self) -> None:
         """Register proprioceptive state features."""
-        self.features["agent_pos"] = PolicyFeature(
-            type=FeatureType.STATE, shape=(self.state_dim,)
-        )
+        self.features["agent_pos"] = PolicyFeature(type=FeatureType.STATE, shape=(self.state_dim,))
 
     def _add_visual_features(self) -> None:
         """Register pixel observation features when obs_type requires them."""

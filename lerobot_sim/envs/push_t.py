@@ -64,14 +64,10 @@ class PushTSimEnv(gym.Env):
         """Define action and observation Gymnasium spaces."""
         self.action_space = spaces.Box(low=-1.0, high=1.0, shape=(2,), dtype=np.float32)
         obs_dict: Dict[str, spaces.Space] = {}
-        obs_dict["agent_pos"] = spaces.Box(
-            low=0.0, high=1.0, shape=(self.cfg.state_dim,), dtype=np.float32
-        )
+        obs_dict["agent_pos"] = spaces.Box(low=0.0, high=1.0, shape=(self.cfg.state_dim,), dtype=np.float32)
         if "pixels" in self.cfg.obs_type:
             h, w = self.cfg.observation_height, self.cfg.observation_width
-            obs_dict["pixels"] = spaces.Box(
-                low=0, high=255, shape=(h, w, 3), dtype=np.uint8
-            )
+            obs_dict["pixels"] = spaces.Box(low=0, high=255, shape=(h, w, 3), dtype=np.uint8)
         self.observation_space = spaces.Dict(obs_dict)
 
     def _init_entities(self) -> None:
@@ -146,9 +142,7 @@ class PushTSimEnv(gym.Env):
         success = pos_dist < 0.08
         return reward, success
 
-    def step(
-        self, action: np.ndarray
-    ) -> Tuple[Dict[str, np.ndarray], float, bool, bool, Dict[str, Any]]:
+    def step(self, action: np.ndarray) -> Tuple[Dict[str, np.ndarray], float, bool, bool, Dict[str, Any]]:
         """Advance the environment by one step.
 
         Args:
@@ -214,9 +208,7 @@ class PushTSimEnv(gym.Env):
         h, w = canvas.shape[:2]
         cx, cy = int(self._target_pos[0] * w), int(self._target_pos[1] * h)
         half = int(0.04 * w)
-        canvas[max(cy - half, 0) : cy + half, max(cx - half * 2, 0) : cx + half * 2] = (
-            COLOR_TARGET
-        )
+        canvas[max(cy - half, 0) : cy + half, max(cx - half * 2, 0) : cx + half * 2] = COLOR_TARGET
 
     def _draw_block(self, canvas: np.ndarray) -> None:
         """Draw the T-shaped block on *canvas*.
@@ -227,9 +219,7 @@ class PushTSimEnv(gym.Env):
         h, w = canvas.shape[:2]
         cx, cy = int(self._block_pos[0] * w), int(self._block_pos[1] * h)
         half = int(0.03 * w)
-        canvas[max(cy - half, 0) : cy + half, max(cx - half * 2, 0) : cx + half * 2] = (
-            COLOR_OBJECT
-        )
+        canvas[max(cy - half, 0) : cy + half, max(cx - half * 2, 0) : cx + half * 2] = COLOR_OBJECT
 
     def _draw_agent(self, canvas: np.ndarray) -> None:
         """Draw the circular pusher on *canvas*.

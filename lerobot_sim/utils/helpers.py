@@ -93,9 +93,7 @@ def seed_rngs(seed: int) -> np.random.Generator:
     return np.random.default_rng(seed)
 
 
-def get_channel_first_shape(
-    height: int, width: int, channels: int = 3
-) -> Tuple[int, int, int]:
+def get_channel_first_shape(height: int, width: int, channels: int = 3) -> Tuple[int, int, int]:
     """Return the (C, H, W) shape tuple from spatial dimensions.
 
     Args:

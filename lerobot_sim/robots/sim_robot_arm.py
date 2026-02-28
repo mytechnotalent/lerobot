@@ -45,9 +45,7 @@ class SimRobotArm:
     """
 
     num_joints: int = SO100_NUM_JOINTS
-    joint_positions: np.ndarray = field(
-        default_factory=lambda: np.zeros(SO100_NUM_JOINTS)
-    )
+    joint_positions: np.ndarray = field(default_factory=lambda: np.zeros(SO100_NUM_JOINTS))
     joint_lower: Tuple[float, ...] = SO100_JOINT_LOWER
     joint_upper: Tuple[float, ...] = SO100_JOINT_UPPER
     link_lengths: Tuple[float, ...] = SO100_LINK_LENGTHS
