@@ -107,8 +107,8 @@ for details.
 
 ```
 lerobot/
-  run_sim.py                  # CLI entry point
-  env.py                      # EnvHub compatibility shim
+  run_sim.py                   # CLI entry point
+  env.py                       # EnvHub compatibility shim
   pyproject.toml               # Package metadata + dependencies
   TUTORIAL.md                  # You are here
   README.md                    # Quick-start reference
@@ -272,20 +272,20 @@ feed-forward neural network with two hidden layers:
       │
       ▼
  ┌──────────┐
- │  Linear   │  state_dim (6) → hidden_dim (256)
- │  + ReLU   │
+ │  Linear  │  state_dim (6) → hidden_dim (256)
+ │  + ReLU  │
  └──────────┘
       │
       ▼
  ┌──────────┐
- │  Linear   │  hidden_dim (256) → hidden_dim (256)
- │  + ReLU   │
+ │  Linear  │  hidden_dim (256) → hidden_dim (256)
+ │  + ReLU  │
  └──────────┘
       │
       ▼
  ┌──────────┐
- │  Linear   │  hidden_dim (256) → action_dim (2)
- │  + tanh   │
+ │  Linear  │  hidden_dim (256) → action_dim (2)
+ │  + tanh  │
  └──────────┘
       │
       ▼
@@ -302,7 +302,7 @@ action.
 
 All weights use **Xavier uniform** initialisation:
 
-$$w_{ij} \sim \mathcal{U}\!\left(-\sqrt{\frac{6}{\text{fan\_in}+\text{fan\_out}}},\; \sqrt{\frac{6}{\text{fan\_in}+\text{fan\_out}}}\right)$$
+$$w_{ij} \sim \mathcal{U}\!\left(-\sqrt{\frac{6}{n_{\mathrm{in}}+n_{\mathrm{out}}}},\; \sqrt{\frac{6}{n_{\mathrm{in}}+n_{\mathrm{out}}}}\right)$$
 
 Biases are initialised to zero.  Xavier keeps the signal variance
 roughly constant across layers, which prevents gradients from
@@ -620,7 +620,7 @@ envs = make_env("your-user/lerobot-sim", trust_remote_code=True)
 | **Behavioral Cloning (BC)** | Supervised learning from expert demonstrations: predict the expert's action given the same observation.                                         |
 | **MLP**                     | Multi-Layer Perceptron — a feed-forward neural network with one or more hidden layers.                                                          |
 | **Adam**                    | Adaptive Moment Estimation — an optimiser that maintains running estimates of gradient mean and variance to adapt per-parameter learning rates. |
-| **Xavier Init**             | Weight initialisation that scales values by $\sqrt{6 / (\text{fan\_in} + \text{fan\_out})}$ to preserve signal variance.                        |
+| **Xavier Init**             | Weight initialisation that scales values by $\sqrt{6 / (n_{\mathrm{in}} + n_{\mathrm{out}})}$ to preserve signal variance.                      |
 | **ReLU**                    | Rectified Linear Unit — $\max(0, x)$.  The simplest and most common hidden-layer activation.                                                    |
 | **tanh**                    | Hyperbolic tangent — squashes values to $[-1, 1]$.  Used at the output layer to match the action range.                                         |
 | **MSE**                     | Mean Squared Error — the loss function $\frac{1}{d}\sum_j (a_j^{\text{pred}} - a_j^{\text{target}})^2$.                                         |
