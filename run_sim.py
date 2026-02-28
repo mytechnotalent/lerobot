@@ -155,9 +155,7 @@ def _run_eval(env_cfg: SimEnvConfig, args: argparse.Namespace) -> None:
     print(f"\nInference results: {metrics}")
 
 
-def _run_teleop_loop(
-    env: Any, teleop: KeyboardTeleop, recorder: SimDatasetRecorder
-) -> None:
+def _run_teleop_loop(env: Any, teleop: KeyboardTeleop, recorder: SimDatasetRecorder) -> None:
     """Run the keyboard teleoperation loop for one episode.
 
     Args:
@@ -217,9 +215,7 @@ def _run_visualize(env_cfg: SimEnvConfig, args: argparse.Namespace) -> None:
     viz.close()
 
 
-def _run_visualize_loop(
-    env: Any, policy: Any, viz: SimVisualizer, max_steps: int
-) -> None:
+def _run_visualize_loop(env: Any, policy: Any, viz: SimVisualizer, max_steps: int) -> None:
     """Step through the env, rendering every frame to the visualizer.
 
     Args:
@@ -236,9 +232,7 @@ def _run_visualize_loop(
         obs, reward, terminated, truncated, info = env.step(action)
         total_reward += reward
         image = obs.get("pixels", env.render())
-        alive = viz.render_frame(
-            image, step=step, reward=total_reward, success=info.get("is_success", False)
-        )
+        alive = viz.render_frame(image, step=step, reward=total_reward, success=info.get("is_success", False))
         if not alive:
             break
         if terminated or truncated:
@@ -260,12 +254,8 @@ def _parse_args() -> argparse.Namespace:
         Parsed ``argparse.Namespace``.
     """
     parser = argparse.ArgumentParser(description="LeRobot Simulation Environment")
-    parser.add_argument(
-        "--task", choices=["pusht", "pick_place", "reach"], default="pusht"
-    )
-    parser.add_argument(
-        "--mode", choices=["train", "eval", "teleop", "visualize"], default="train"
-    )
+    parser.add_argument("--task", choices=["pusht", "pick_place", "reach"], default="pusht")
+    parser.add_argument("--mode", choices=["train", "eval", "teleop", "visualize"], default="train")
     parser.add_argument("--demo-episodes", type=int, default=20)
     parser.add_argument("--train-steps", type=int, default=3000)
     parser.add_argument("--eval-episodes", type=int, default=5)
