@@ -5,7 +5,7 @@
 **CREATION DATE:** January 11, 2026  
 **UPDATE DATE:** February 28, 2026
 
-Simulated robotics environment compatible with [HuggingFace LeRobot](https://huggingface.co/lerobot). No physical robot required.
+Train a robot brain from zero to 100 % success in 60 seconds flat — no hardware, pure NumPy, pure magic. Built on [HuggingFace LeRobot](https://huggingface.co/lerobot) standards.
 
 ## Install
 
